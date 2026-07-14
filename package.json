@@ -2,6 +2,7 @@
   "name": "ompusage",
   "version": "1.0.0",
   "description": "OMP terminal widget for local AI token usage, provider quotas, reset windows, and balances.",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "test": "bun test ./index.test.ts",

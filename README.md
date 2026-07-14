@@ -47,3 +47,7 @@ bun run build
 ```
 
 运行源码是 `index.ts`，测试位于 `index.test.ts`。构建产物输出到 `dist/`，不提交到 Git。
+
+## License
+
+本项目基于 [MIT License](./LICENSE) 开源。
