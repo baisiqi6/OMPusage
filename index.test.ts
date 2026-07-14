@@ -139,6 +139,26 @@ describe("provider parsers", () => {
       `Kimi 5h  ${renderBar(25)}  25%（1h30m 后重置）  ·  7d  ${renderBar(50)}  50%（6d0h 后重置）`,
     ]);
   });
+
+  test("Kimi accepts the current seven-day used field", () => {
+    const now = Date.UTC(2026, 6, 14, 12, 0, 0);
+    expect(
+      extractKimiUsage(
+        {
+          limits: [
+            {
+              detail: { limit: "100", remaining: "75", resetTime: new Date(now + 90 * 60_000).toISOString() },
+              window: { duration: 300, timeUnit: "TIME_UNIT_MINUTE" },
+            },
+          ],
+          usage: { limit: "100", used: "50", resetTime: new Date(now + 6 * 24 * 60 * 60_000).toISOString() },
+        },
+        now,
+      ),
+    ).toEqual([
+      `Kimi 5h  ${renderBar(25)}  25%（1h30m 后重置）  ·  7d  ${renderBar(50)}  50%（6d0h 后重置）`,
+    ]);
+  });
 });
 
 describe("official usage rendering", () => {

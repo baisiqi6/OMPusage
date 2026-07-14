@@ -615,11 +615,13 @@ export function extractKimiUsage(data: unknown, now = Date.now()): string[] {
 
   if (isRecord(data.usage)) {
     const maximum = finiteNumber(data.usage.limit);
+    const used = finiteNumber(data.usage.used);
     const remaining = finiteNumber(data.usage.remaining);
-    if (maximum !== undefined && maximum > 0 && remaining !== undefined) {
+    if (maximum !== undefined && maximum > 0 && (used !== undefined || remaining !== undefined)) {
+      const usedAmount = used ?? maximum - remaining!;
       limits.push({
         label: "Total quota",
-        amount: { usedFraction: Math.max(0, Math.min(1, (maximum - remaining) / maximum)) },
+        amount: { usedFraction: Math.max(0, Math.min(1, usedAmount / maximum)) },
         window: { label: "Usage window", resetsAt: absoluteTimestampMs(data.usage.resetTime) },
       });
     }
